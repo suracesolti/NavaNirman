@@ -36,6 +36,8 @@ def product_list(request: Request):
 @app.get("/product/{product_id}")
 def product_detail(request: Request, product_id: int):
     product = get_product_by_id(product_id)
+    if product is None:
+        return templates.TemplateResponse("product.html", {"request": request, "products": get_products(), "error": "Product not found."})
     return templates.TemplateResponse("product.html", {"request": request, "product": product})
 
 @app.get("/contact")

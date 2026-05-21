@@ -4,48 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product | Nawa Nirman Hardware</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     <header class="site-header">
         <div class="container header-inner">
-            <a href="index.html" class="brand">Nawa Nirman Hardware</a>
+            <a href="/" class="brand">Nawa Nirman Hardware</a>
             <button class="nav-toggle" id="navToggleProduct">Menu</button>
             <nav class="main-nav" id="mainNavProduct">
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="categories.html">Categories</a>
-                <a href="product.html">Products</a>
-                <a href="contact.html">Contact</a>
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/categories">Categories</a>
+                <a href="/product">Products</a>
+                <a href="/contact">Contact</a>
             </nav>
         </div>
     </header>
 
     <section class="page-banner page-banner--small">
         <div class="container">
-            <h1>Product Details</h1>
-            <p>Detailed product page for the Nawa Nirman Cordless Drill Kit.</p>
+            {% if product %}
+                <h1>{{ product.name }}</h1>
+                <p>{{ product.description }}</p>
+            {% else %}
+                <h1>Products</h1>
+                <p>Browse our available hardware products and click a card to see full details.</p>
+            {% endif %}
         </div>
     </section>
 
-    <section class="section product-detail-section">
-        <div class="container product-detail-grid">
-            <div class="product-image-large"></div>
-            <div class="product-detail-copy">
-                <span class="eyebrow">Best Seller</span>
-                <h2>Cordless Drill Kit</h2>
-                <p>High-performance 18V cordless drill set with battery, charger and quick-change bits. Ideal for wood, metal and masonry work.</p>
-                <div class="product-price">Rs. 8,900</div>
-                <ul class="feature-list">
-                    <li>18V lithium-ion battery</li>
-                    <li>2-speed gearbox</li>
-                    <li>LED work light</li>
-                    <li>Soft-grip handle</li>
-                </ul>
-                <button class="btn btn-primary">Add to Cart</button>
+    {% if product %}
+        <section class="section product-detail-section">
+            <div class="container product-detail-grid">
+                <div class="product-image-large"></div>
+                <div class="product-detail-copy">
+                    <span class="eyebrow">Featured Product</span>
+                    <h2>{{ product.name }}</h2>
+                    <p>{{ product.description }}</p>
+                    <div class="product-price">Rs. {{ product.price }}</div>
+                    <ul class="feature-list">
+                        <li>High-quality hardware for home & construction</li>
+                        <li>Reliable performance and trusted durability</li>
+                        <li>Fast delivery across Kathmandu</li>
+                    </ul>
+                    <button class="btn btn-primary">Add to Cart</button>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    {% else %}
+        <section class="section featured-section">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Available Products</h2>
+                </div>
+                <div class="product-grid">
+                    {% for item in products %}
+                        <article class="product-card">
+                            <div class="product-image"></div>
+                            <h3>{{ item.name }}</h3>
+                            <p>{{ item.description }}</p>
+                            <div class="product-meta">
+                                <strong>Rs. {{ item.price }}</strong>
+                                <a href="/product/{{ item.id }}" class="card-link">View</a>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
 
     <footer class="site-footer">
         <div class="container footer-grid">
@@ -55,9 +82,9 @@
             </div>
             <div>
                 <h4>Navigation</h4>
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
             </div>
             <div>
                 <h4>Contact</h4>
@@ -71,6 +98,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="/static/script.js"></script>
 </body>
 </html>
