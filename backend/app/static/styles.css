@@ -393,6 +393,26 @@ textarea {
   gap: 1rem;
 }
 
+.success-message,
+.error-message {
+  margin: 0 0 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+
+.success-message {
+  background: #e7f7ed;
+  color: #1e5e30;
+  border: 1px solid #b7e1bb;
+}
+
+.error-message {
+  background: #fdecea;
+  color: #8a1f11;
+  border: 1px solid #f1b0af;
+}
+
 .page-banner {
   padding: 4rem 0 2rem;
   background: linear-gradient(180deg, #f5f4ee 0%, #f0f5ed 100%);

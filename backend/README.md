@@ -28,6 +28,24 @@ cd backend
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
+## Docker
+
+Build and run the backend with Docker:
+
+```bash
+cd backend
+docker build -t nava-nirman-backend .
+docker run --rm -p 8000:8000 nava-nirman-backend
+```
+
+## Procfile
+
+A `Procfile` is included for Heroku-style deployments:
+
+```text
+web: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+```
+
 ## Next steps
 
 1. Move your frontend pages into `backend/app/templates/`.

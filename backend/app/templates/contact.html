@@ -39,18 +39,21 @@
                     <p><strong>Email:</strong> info@nawanirmanhardware.com</p>
                 </div>
             </div>
-            <form class="contact-form">
+            <form class="contact-form" action="/contact" method="post">
+                {% if success %}
+                    <p class="success-message">Thanks! Your message has been sent. We'll be in touch soon.</p>
+                {% endif %}
                 <label>
                     Name
-                    <input type="text" placeholder="Your name" aria-label="Name">
+                    <input type="text" name="name" placeholder="Your name" aria-label="Name" required>
                 </label>
                 <label>
                     Email
-                    <input type="email" placeholder="Your email" aria-label="Email">
+                    <input type="email" name="email" placeholder="Your email" aria-label="Email" required>
                 </label>
                 <label>
                     Message
-                    <textarea placeholder="How can we help?" aria-label="Message"></textarea>
+                    <textarea name="message" placeholder="How can we help?" aria-label="Message" required></textarea>
                 </label>
                 <button type="submit" class="btn btn-primary">Send Message</button>
             </form>

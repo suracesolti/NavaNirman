@@ -57,6 +57,9 @@
                 <div class="section-heading">
                     <h2>Available Products</h2>
                 </div>
+                {% if error %}
+                    <p class="error-message">{{ error }}</p>
+                {% endif %}
                 <div class="product-grid">
                     {% for item in products %}
                         <article class="product-card">

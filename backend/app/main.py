@@ -41,13 +41,13 @@ def product_detail(request: Request, product_id: int):
     return templates.TemplateResponse("product.html", {"request": request, "product": product})
 
 @app.get("/contact")
-def contact_form(request: Request):
-    return templates.TemplateResponse("contact.html", {"request": request})
+def contact_form(request: Request, submitted: int = 0):
+    return templates.TemplateResponse("contact.html", {"request": request, "success": bool(submitted)})
 
 @app.post("/contact")
 def submit_contact(name: str = Form(...), email: str = Form(...), message: str = Form(...)):
     create_contact(name=name, email=email, message=message)
-    return RedirectResponse(url="/contact", status_code=303)
+    return RedirectResponse(url="/contact?submitted=1", status_code=303)
 
 @app.get("/api/products")
 def api_products():
