@@ -14,6 +14,8 @@ class User(SQLModel, table=True):
     email: str = Field(sa_column_kwargs={"unique": True, "index": True})
     password_hash: str
     password_salt: str
+    address: Optional[str] = Field(default=None)
+    phone: Optional[str] = Field(default=None)
 
 class Product(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -38,6 +40,9 @@ class Order(SQLModel, table=True):
     user_id: Optional[int] = Field(default=None, foreign_key="user.id")
     name: str
     email: str
+    payment_method: str = Field(default="Cash on delivery")
+    shipping_address: Optional[str] = Field(default=None)
+    phone: Optional[str] = Field(default=None)
     total: float
     created_at: datetime = Field(default_factory=datetime.utcnow)
 

@@ -28,8 +28,9 @@
                 </label>
                 <label>
                     Password
-                    <input type="password" name="password" required>
+                    <input type="password" name="password" required pattern="(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}" aria-describedby="password-help">
                 </label>
+                <p id="password-help" class="form-help">Use at least 8 characters, including a number and a special character.</p>
                 <button type="submit" class="btn btn-primary">Create account</button>
             </form>
         </div>

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Profile | Nawa Nirman Hardware{% endblock %}
+
+{% block content %}
+<section class="page-banner page-banner--small">
+    <div class="container">
+        <h1>Your Profile</h1>
+        <p>Update your contact details and shipping address for a faster checkout.</p>
+    </div>
+</section>
+
+<section class="section auth-section">
+    <div class="container auth-grid">
+        <div class="auth-card">
+            <h2>Profile information</h2>
+            {% if success %}
+                <p class="success-message">Your profile has been updated.</p>
+            {% endif %}
+            {% if error %}
+                <p class="error-message">{{ error }}</p>
+            {% endif %}
+            <form class="auth-form" action="/profile" method="post">
+                <label>
+                    Name
+                    <input type="text" name="name" value="{{ user.name }}" required>
+                </label>
+                <label>
+                    Email
+                    <input type="email" name="email" value="{{ user.email }}" required>
+                </label>
+                <label>
+                    Phone
+                    <input type="tel" name="phone" value="{{ user.phone or '' }}">
+                </label>
+                <label>
+                    Address
+                    <textarea name="address" rows="4">{{ user.address or '' }}</textarea>
+                </label>
+                <button type="submit" class="btn btn-primary">Save profile</button>
+            </form>
+        </div>
+        <div class="auth-panel">
+            <h3>Profile quick links</h3>
+            <p>Keep your contact information current so we can send order confirmations and get your order delivered right.</p>
+            <a href="/cart" class="btn btn-secondary">View cart</a>
+            <a href="/checkout" class="btn btn-secondary">Checkout</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

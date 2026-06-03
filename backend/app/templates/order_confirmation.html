@@ -14,7 +14,15 @@
     <div class="container order-card">
         <h2>Order #{{ order.id }}</h2>
         <p>Received for {{ order.name }} at <strong>{{ order.email }}</strong>.</p>
+        <p>Payment method: <strong>{% if order.payment_method == 'card' %}Card Payment{% elif order.payment_method == 'bank_transfer' %}Bank Transfer{% else %}Cash on Delivery{% endif %}</strong></p>
+        <p>Shipping address: <strong>{{ order.shipping_address or 'N/A' }}</strong></p>
+        <p>Phone: <strong>{{ order.phone or 'N/A' }}</strong></p>
         <p>Your total payment: <strong>Rs. {{ order.total }}</strong></p>
+        {% if email_sent %}
+            <p>A confirmation email has been sent to <strong>{{ order.email }}</strong>.</p>
+        {% else %}
+            <p class="muted">Email confirmation was not sent. Please contact support if you need order updates.</p>
+        {% endif %}
         <p>We will contact you soon with shipping details.</p>
         <a href="/product" class="btn btn-primary">Continue shopping</a>
     </div>

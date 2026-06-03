@@ -41,6 +41,20 @@ def get_user_by_id(user_id: int) -> Optional[User]:
     with Session(engine) as session:
         return session.get(User, user_id)
 
+def update_user_profile(user_id: int, name: str, email: str, phone: str, address: str) -> Optional[User]:
+    with Session(engine) as session:
+        user = session.get(User, user_id)
+        if user is None:
+            return None
+        user.name = name
+        user.email = email.lower().strip()
+        user.phone = phone.strip() or None
+        user.address = address.strip() or None
+        session.add(user)
+        session.commit()
+        session.refresh(user)
+        return user
+
 def authenticate_user(email: str, password: str) -> Optional[User]:
     user = get_user_by_email(email)
     if user is None:
@@ -152,10 +166,18 @@ def merge_session_cart(user_id: int, session_cart: Dict[str, int]) -> None:
     for product_id, quantity in session_cart.items():
         add_or_update_cart_item(user_id, int(product_id), int(quantity))
 
-def create_order(user_id: Optional[int], name: str, email: str, items: List[dict]) -> Order:
+def create_order(user_id: Optional[int], name: str, email: str, items: List[dict], payment_method: str, shipping_address: str, phone: str) -> Order:
     total = sum(item["subtotal"] for item in items)
     with Session(engine) as session:
-        order = Order(user_id=user_id, name=name, email=email, total=total)
+        order = Order(
+            user_id=user_id,
+            name=name,
+            email=email,
+            payment_method=payment_method,
+            shipping_address=shipping_address,
+            phone=phone,
+            total=total,
+        )
         session.add(order)
         session.commit()
         session.refresh(order)

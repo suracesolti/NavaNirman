@@ -23,7 +23,7 @@
             </nav>
             <div class="nav-actions">
                 {% if user %}
-                    <span class="nav-user">Hello, {{ user.name }}</span>
+                    <a href="/profile" class="nav-user">Hello, {{ user.name }}</a>
                     <a href="/logout" class="btn btn-secondary">Logout</a>
                 {% else %}
                     <a href="/login" class="btn btn-secondary">Login</a>

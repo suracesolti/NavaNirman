@@ -29,24 +29,73 @@
         </div>
         <div class="checkout-form-card">
             <h2>Payment details</h2>
-            <form action="/checkout" method="post" class="checkout-form">
+            <form action="/checkout" method="post" class="checkout-form" id="checkout-form">
+                {% if error %}
+                    <p class="error-message">{{ error }}</p>
+                {% endif %}
                 <label>
                     Full name
-                    <input type="text" name="name" required>
+                    <input type="text" name="name" value="{{ name or '' }}" required>
                 </label>
                 <label>
                     Email address
-                    <input type="email" name="email" required>
+                    <input type="email" name="email" value="{{ email or '' }}" required>
+                </label>
+                <label>
+                    Phone number
+                    <input type="tel" name="phone" value="{{ phone or '' }}" required>
+                </label>
+                <label>
+                    Full address
+                    <textarea name="shipping_address" rows="4" required>{{ address or '' }}</textarea>
                 </label>
                 <label>
                     Payment method
-                    <select name="payment_method" disabled>
-                        <option>Cash on delivery (demo)</option>
+                    <select name="payment_method" id="payment-method" required>
+                        <option value="cash" {% if payment_method == "cash" %}selected{% endif %}>Cash on Delivery</option>
+                        <option value="card" {% if payment_method == "card" %}selected{% endif %}>Card Payment</option>
+                        <option value="bank_transfer" {% if payment_method == "bank_transfer" %}selected{% endif %}>Bank Transfer</option>
                     </select>
                 </label>
-                <button type="submit" class="btn btn-primary">Pay Rs. {{ total }}</button>
+                <div id="card-details" class="payment-details" style="display: none;">
+                    <label>
+                        Card number
+                        <input type="text" name="card_number" pattern="[0-9 ]{13,19}" placeholder="1234 5678 9012 3456">
+                    </label>
+                    <label>
+                        Expiry date
+                        <input type="text" name="card_expiry" placeholder="MM/YY">
+                    </label>
+                    <label>
+                        CVV
+                        <input type="password" name="card_cvv" pattern="[0-9]{3,4}" placeholder="123">
+                    </label>
+                </div>
+                <div id="bank-details" class="payment-details" style="display: none;">
+                    <p>After placing your order, transfer the amount to our bank and send the payment screenshot to support.</p>
+                    <p><strong>Bank:</strong> NMB Bank<br><strong>Account:</strong> 1234-5678-9012<br><strong>Name:</strong> Nawa Nirman Hardware</p>
+                </div>
+                <button type="submit" class="btn btn-primary">Complete purchase for Rs. {{ total }}</button>
             </form>
         </div>
+    </div>
+</section>
+<script>
+    const paymentMethod = document.getElementById('payment-method');
+    const cardDetails = document.getElementById('card-details');
+    const bankDetails = document.getElementById('bank-details');
+
+    function updatePaymentFields() {
+        const value = paymentMethod.value;
+        cardDetails.style.display = value === 'card' ? 'block' : 'none';
+        bankDetails.style.display = value === 'bank_transfer' ? 'block' : 'none';
+    }
+
+    if (paymentMethod) {
+        paymentMethod.addEventListener('change', updatePaymentFields);
+        updatePaymentFields();
+    }
+</script>
     </div>
 </section>
 {% endblock %}
