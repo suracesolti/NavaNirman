@@ -1,6 +1,7 @@
 import hashlib
 import secrets
-from typing import Dict, List, Optional
+from types import SimpleNamespace
+from typing import Any, Dict, List, Optional
 from sqlmodel import Session, select
 from .models import CartItem, Category, Contact, Order, OrderItem, Product, User
 from .database import engine
@@ -166,7 +167,7 @@ def merge_session_cart(user_id: int, session_cart: Dict[str, int]) -> None:
     for product_id, quantity in session_cart.items():
         add_or_update_cart_item(user_id, int(product_id), int(quantity))
 
-def create_order(user_id: Optional[int], name: str, email: str, items: List[dict], payment_method: str, shipping_address: str, phone: str) -> Order:
+def create_order(user_id: Optional[int], name: str, email: str, items: List[dict], payment_method: str, shipping_address: str, phone: str) -> Any:
     total = sum(item["subtotal"] for item in items)
     with Session(engine) as session:
         order = Order(
@@ -191,7 +192,18 @@ def create_order(user_id: Optional[int], name: str, email: str, items: List[dict
                 )
             )
         session.commit()
-        return order
+        # Build a plain, detached-safe object to return (avoid expired attributes after commit)
+        order_data = {
+            "id": order.id,
+            "user_id": order.user_id,
+            "name": order.name,
+            "email": order.email,
+            "payment_method": order.payment_method,
+            "shipping_address": order.shipping_address,
+            "phone": order.phone,
+            "total": order.total,
+        }
+        return SimpleNamespace(**order_data)
 
 def get_order_by_id(order_id: int) -> Optional[Order]:
     with Session(engine) as session:
