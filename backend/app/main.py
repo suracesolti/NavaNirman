@@ -17,7 +17,7 @@ jinja_env = Environment(
     autoescape=select_autoescape(["html", "xml"]),
     cache_size=0,
 )
-templates = Jinja2Templates(directory=TEMPLATE_DIR, env=jinja_env)
+templates = Jinja2Templates(env=jinja_env)
 
 @app.on_event("startup")
 def on_startup():
@@ -25,32 +25,32 @@ def on_startup():
 
 @app.get("/")
 def homepage(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request, "index.html", {"request": request})
 
 @app.get("/about")
 def about(request: Request):
-    return templates.TemplateResponse("about.html", {"request": request})
+    return templates.TemplateResponse(request, "about.html", {"request": request})
 
 @app.get("/categories")
 def categories(request: Request):
     items = get_categories()
-    return templates.TemplateResponse("categories.html", {"request": request, "categories": items})
+    return templates.TemplateResponse(request, "categories.html", {"request": request, "categories": items})
 
 @app.get("/product")
 def product_list(request: Request):
     products = get_products()
-    return templates.TemplateResponse("product.html", {"request": request, "products": products})
+    return templates.TemplateResponse(request, "product.html", {"request": request, "products": products})
 
 @app.get("/product/{product_id}")
 def product_detail(request: Request, product_id: int):
     product = get_product_by_id(product_id)
     if product is None:
-        return templates.TemplateResponse("product.html", {"request": request, "products": get_products(), "error": "Product not found."})
-    return templates.TemplateResponse("product.html", {"request": request, "product": product})
+        return templates.TemplateResponse(request, "product.html", {"request": request, "products": get_products(), "error": "Product not found."})
+    return templates.TemplateResponse(request, "product.html", {"request": request, "product": product})
 
 @app.get("/contact")
 def contact_form(request: Request, submitted: int = 0):
-    return templates.TemplateResponse("contact.html", {"request": request, "success": bool(submitted)})
+    return templates.TemplateResponse(request, "contact.html", {"request": request, "success": bool(submitted)})
 
 @app.post("/contact")
 def submit_contact(name: str = Form(...), email: str = Form(...), message: str = Form(...)):
