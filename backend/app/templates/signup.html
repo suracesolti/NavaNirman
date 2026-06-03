@@ -28,9 +28,25 @@
                 </label>
                 <label>
                     Password
-                    <input type="password" name="password" required pattern="(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}" aria-describedby="password-help">
+                    <input type="password" name="password" id="password-input" required aria-describedby="password-requirements">
                 </label>
-                <p id="password-help" class="form-help">Use at least 8 characters, including a number and a special character.</p>
+                <div id="password-requirements" class="password-requirements">
+                    <p class="password-requirements-title">Password must contain:</p>
+                    <ul class="password-checklist">
+                        <li id="req-length" class="requirement">
+                            <span class="requirement-icon">✗</span>
+                            <span class="requirement-text">At least 8 characters</span>
+                        </li>
+                        <li id="req-number" class="requirement">
+                            <span class="requirement-icon">✗</span>
+                            <span class="requirement-text">At least one number (0-9)</span>
+                        </li>
+                        <li id="req-special" class="requirement">
+                            <span class="requirement-icon">✗</span>
+                            <span class="requirement-text">At least one special character (!@#$%^&*)</span>
+                        </li>
+                    </ul>
+                </div>
                 <button type="submit" class="btn btn-primary">Create account</button>
             </form>
         </div>

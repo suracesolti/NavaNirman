@@ -407,6 +407,60 @@ textarea {
   font-size: 0.9rem;
 }
 
+.password-requirements {
+  margin: 0.75rem 0 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--accent-soft);
+  border-radius: 12px;
+  border: 1px solid rgba(76, 107, 82, 0.2);
+}
+
+.password-requirements-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-strong);
+}
+
+.password-checklist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.requirement {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.requirement-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  min-width: 1.2rem;
+  font-weight: 700;
+  font-size: 0.75rem;
+  border-radius: 50%;
+  background: #f0f0f0;
+  color: #999;
+  transition: all 0.2s ease;
+}
+
+.requirement.met .requirement-icon {
+  background: #c6e9d1;
+  color: #1e5e30;
+}
+
+.requirement.met {
+  color: #1e5e30;
+}
+
 .payment-details {
   display: grid;
   gap: 1rem;
