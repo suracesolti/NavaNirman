@@ -167,7 +167,7 @@ def merge_session_cart(user_id: int, session_cart: Dict[str, int]) -> None:
     for product_id, quantity in session_cart.items():
         add_or_update_cart_item(user_id, int(product_id), int(quantity))
 
-def create_order(user_id: Optional[int], name: str, email: str, items: List[dict], payment_method: str, shipping_address: str, phone: str) -> Any:
+def create_order(user_id: Optional[int], name: str, email: str, items: List[dict], payment_method: str, shipping_address: str, phone: str, receipt_method: str = "email") -> Any:
     total = sum(item["subtotal"] for item in items)
     with Session(engine) as session:
         order = Order(
@@ -177,6 +177,7 @@ def create_order(user_id: Optional[int], name: str, email: str, items: List[dict
             payment_method=payment_method,
             shipping_address=shipping_address,
             phone=phone,
+            receipt_method=receipt_method,
             total=total,
         )
         session.add(order)
@@ -201,6 +202,7 @@ def create_order(user_id: Optional[int], name: str, email: str, items: List[dict
             "payment_method": order.payment_method,
             "shipping_address": order.shipping_address,
             "phone": order.phone,
+            "receipt_method": order.receipt_method,
             "total": order.total,
         }
         return SimpleNamespace(**order_data)

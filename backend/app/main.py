@@ -81,6 +81,22 @@ def ensure_database_schema():
             conn.execute(text('ALTER TABLE "order" ADD COLUMN shipping_address TEXT'))
         if not has_column("order", "phone"):
             conn.execute(text('ALTER TABLE "order" ADD COLUMN phone TEXT'))
+        if not has_column("order", "receipt_method"):
+            conn.execute(text('ALTER TABLE "order" ADD COLUMN receipt_method TEXT DEFAULT "email"'))
+
+
+def send_order_confirmation_sms(order):
+    """Send SMS confirmation. This is a placeholder - in production, use Twilio or similar."""
+    phone = order.phone
+    if not phone:
+        print("SMS skipped: No phone number provided.")
+        return False
+    
+    message_text = f"Order #{order.id} confirmed! Total: Rs. {order.total}. Thank you for shopping at Nawa Nirman Hardware!"
+    
+    # Placeholder for SMS sending - in production, integrate with Twilio or similar service
+    print(f"SMS would be sent to {phone}: {message_text}")
+    return True
 
 
 def send_order_confirmation_email(order):
@@ -109,20 +125,34 @@ def send_order_confirmation_email(order):
     message["To"] = order.email
     message.set_content(body)
 
+    email_sent = False
     if smtp_host and smtp_user and smtp_password:
         try:
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL(smtp_host, smtp_port, context=context) as smtp:
                 smtp.login(smtp_user, smtp_password)
                 smtp.send_message(message)
-            return True
+            email_sent = True
         except Exception as exc:
             print("Failed to send confirmation email:", exc)
-            return False
-
-    print("Confirmation email skipped. Configure SMTP_HOST, SMTP_USER, and SMTP_PASSWORD to enable email delivery.")
-    print(body)
-    return False
+            email_sent = False
+    else:
+        print("Confirmation email skipped. Configure SMTP_HOST, SMTP_USER, and SMTP_PASSWORD to enable email delivery.")
+        print(body)
+        email_sent = False
+    
+    # Handle SMS based on receipt_method
+    sms_sent = False
+    if hasattr(order, 'receipt_method') and order.receipt_method in ["sms", "both"]:
+        sms_sent = send_order_confirmation_sms(order)
+    
+    # For "both", we consider it successful if either email or SMS was sent
+    if hasattr(order, 'receipt_method') and order.receipt_method == "both":
+        return email_sent or sms_sent
+    elif hasattr(order, 'receipt_method') and order.receipt_method == "sms":
+        return sms_sent
+    else:
+        return email_sent
 
 
 def get_request_cart_items(request: Request):
@@ -223,8 +253,8 @@ def checkout_page(request: Request):
                 "total": total,
                 "name": user.name if user else "",
                 "email": user.email if user else "",
-                "phone": user.phone or "",
-                "address": user.address or "",
+                "phone": (user.phone or "") if user else "",
+                "address": (user.address or "") if user else "",
                     "payment_method": "cash",
             },
         ),
@@ -238,6 +268,7 @@ def checkout_submit(
     payment_method: str = Form(...),
     shipping_address: str = Form(...),
     phone: str = Form(...),
+    receipt_method: str = Form("email"),
     card_number: str = Form(""),
     card_expiry: str = Form(""),
     card_cvv: str = Form(""),
@@ -278,6 +309,7 @@ def checkout_submit(
         payment_method,
         shipping_address,
         phone,
+        receipt_method,
     )
     if user:
         clear_cart(user.id)

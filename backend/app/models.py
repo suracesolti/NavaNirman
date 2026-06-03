@@ -43,6 +43,7 @@ class Order(SQLModel, table=True):
     payment_method: str = Field(default="Cash on delivery")
     shipping_address: Optional[str] = Field(default=None)
     phone: Optional[str] = Field(default=None)
+    receipt_method: Optional[str] = Field(default="email")
     total: float
     created_at: datetime = Field(default_factory=datetime.utcnow)
 

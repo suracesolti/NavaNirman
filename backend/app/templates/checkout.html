@@ -75,6 +75,14 @@
                     <p>After placing your order, transfer the amount to our bank and send the payment screenshot to support.</p>
                     <p><strong>Bank:</strong> NMB Bank<br><strong>Account:</strong> 1234-5678-9012<br><strong>Name:</strong> Nawa Nirman Hardware</p>
                 </div>
+                <label>
+                    Receipt delivery method
+                    <select name="receipt_method" id="receipt-method" required>
+                        <option value="email" selected>Email receipt</option>
+                        <option value="sms">SMS receipt</option>
+                        <option value="both">Both Email and SMS</option>
+                    </select>
+                </label>
                 <button type="submit" class="btn btn-primary">Complete purchase for Rs. {{ total }}</button>
             </form>
         </div>
