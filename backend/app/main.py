@@ -3,13 +3,21 @@ from fastapi import FastAPI, Request, Form
 from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from sqlmodel import SQLModel
 from .database import engine
 from .crud import create_contact, get_product_by_id, get_products, get_categories
 
 app = FastAPI(title="Nawa Nirman Backend")
 app.mount("/static", StaticFiles(directory=os.path.join(os.path.dirname(__file__), "static")), name="static")
-templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "templates"))
+
+TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), "templates")
+jinja_env = Environment(
+    loader=FileSystemLoader(TEMPLATE_DIR),
+    autoescape=select_autoescape(["html", "xml"]),
+    cache_size=0,
+)
+templates = Jinja2Templates(directory=TEMPLATE_DIR, env=jinja_env)
 
 @app.on_event("startup")
 def on_startup():
