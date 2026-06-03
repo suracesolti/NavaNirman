@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Your Cart | Nawa Nirman Hardware{% endblock %}
+
+{% block content %}
+<section class="page-banner page-banner--small">
+    <div class="container">
+        <h1>Your Cart</h1>
+        <p>Review the products you want to purchase and proceed to checkout.</p>
+    </div>
+</section>
+
+<section class="section cart-section">
+    <div class="container cart-card">
+        {% if cart_items and cart_items|length > 0 %}
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                        <tr>
+                            <td>
+                                <strong>{{ item.product.name }}</strong>
+                                <p>{{ item.product.description }}</p>
+                            </td>
+                            <td>{{ item.quantity }}</td>
+                            <td>Rs. {{ item.product.price }}</td>
+                            <td>Rs. {{ item.subtotal }}</td>
+                            <td>
+                                <form action="/cart/remove/{{ item.product.id }}" method="post">
+                                    <button type="submit" class="btn btn-secondary">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="cart-summary">
+                <div>
+                    <h3>Order total</h3>
+                    <p>Rs. {{ total }}</p>
+                </div>
+                <a href="/checkout" class="btn btn-primary">Proceed to checkout</a>
+            </div>
+        {% else %}
+            <div class="empty-cart">
+                <h2>Your cart is empty</h2>
+                <p>Add products from the shop page to start your order.</p>
+                <a href="/product" class="btn btn-primary">Browse products</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

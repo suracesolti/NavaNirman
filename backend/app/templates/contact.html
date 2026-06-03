@@ -1,89 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact | Nawa Nirman Hardware</title>
-    <link rel="stylesheet" href="/static/styles.css">
-</head>
-<body>
-    <header class="site-header">
-        <div class="container header-inner">
-            <a href="/" class="brand">Nawa Nirman Hardware</a>
-            <button class="nav-toggle" id="navToggleContact">Menu</button>
-            <nav class="main-nav" id="mainNavContact">
-                <a href="/">Home</a>
-                <a href="/about">About</a>
-                <a href="/categories">Categories</a>
-                <a href="/product">Products</a>
-                <a href="/contact">Contact</a>
-            </nav>
-        </div>
-    </header>
+{% extends "base.html" %}
 
-    <section class="page-banner page-banner--small">
-        <div class="container">
-            <h1>Contact Us</h1>
-            <p>Get in touch with Nawa Nirman Hardware for orders, product advice, and support.</p>
-        </div>
-    </section>
+{% block title %}Contact | Nawa Nirman Hardware{% endblock %}
 
-    <section class="section contact-section">
-        <div class="container contact-grid">
-            <div class="contact-card">
-                <h2>Contact Information</h2>
-                <p>Reach out to our team for questions, quotes or help choosing the right tools.</p>
-                <div class="contact-details">
-                    <p><strong>Address:</strong> Kathmandu, Nepal</p>
-                    <p><strong>Phone:</strong> +977 98000 00000</p>
-                    <p><strong>Email:</strong> info@nawanirmanhardware.com</p>
-                </div>
-            </div>
-            <form class="contact-form" action="/contact" method="post">
-                {% if success %}
-                    <p class="success-message">Thanks! Your message has been sent. We'll be in touch soon.</p>
-                {% endif %}
-                <label>
-                    Name
-                    <input type="text" name="name" placeholder="Your name" aria-label="Name" required>
-                </label>
-                <label>
-                    Email
-                    <input type="email" name="email" placeholder="Your email" aria-label="Email" required>
-                </label>
-                <label>
-                    Message
-                    <textarea name="message" placeholder="How can we help?" aria-label="Message" required></textarea>
-                </label>
-                <button type="submit" class="btn btn-primary">Send Message</button>
-            </form>
-        </div>
-    </section>
+{% block content %}
+<section class="page-banner page-banner--small">
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p>Get in touch with Nawa Nirman Hardware for orders, product advice, and support.</p>
+    </div>
+</section>
 
-    <footer class="site-footer">
-        <div class="container footer-grid">
-            <div>
-                <h3>Nawa Nirman Hardware</h3>
-                <p>Reliable construction supplies and hardware essentials built for Nepal.</p>
-            </div>
-            <div>
-                <h4>Navigation</h4>
-                <a href="/">Home</a>
-                <a href="/about">About</a>
-                <a href="/contact">Contact</a>
-            </div>
-            <div>
-                <h4>Contact</h4>
-                <p>Kathmandu, Nepal</p>
-                <p>+977 98000 00000</p>
-                <p>info@nawanirmanhardware.com</p>
+<section class="section contact-section">
+    <div class="container contact-grid">
+        <div class="contact-card">
+            <h2>Contact Information</h2>
+            <p>Reach out to our team for questions, quotes or help choosing the right tools.</p>
+            <div class="contact-details">
+                <p><strong>Address:</strong> Kathmandu, Nepal</p>
+                <p><strong>Phone:</strong> +977 98000 00000</p>
+                <p><strong>Email:</strong> info@nawanirmanhardware.com</p>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>© 2026 Nawa Nirman Hardware. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <script src="/static/script.js"></script>
-</body>
-</html>
+        <form class="contact-form" action="/contact" method="post">
+            {% if success %}
+                <p class="success-message">Thanks! Your message has been sent. We'll be in touch soon.</p>
+            {% endif %}
+            <label>
+                Name
+                <input type="text" name="name" placeholder="Your name" aria-label="Name" required>
+            </label>
+            <label>
+                Email
+                <input type="email" name="email" placeholder="Your email" aria-label="Email" required>
+            </label>
+            <label>
+                Message
+                <textarea name="message" placeholder="How can we help?" aria-label="Message" required></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

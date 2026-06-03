@@ -1,15 +1,10 @@
-const toggles = [
-  {buttonId: 'navToggle', navId: 'mainNav'},
-  {buttonId: 'navToggleAbout', navId: 'mainNavAbout'},
-  {buttonId: 'navToggleCategories', navId: 'mainNavCategories'},
-  {buttonId: 'navToggleProduct', navId: 'mainNavProduct'},
-  {buttonId: 'navToggleContact', navId: 'mainNavContact'},
-];
+const toggleButtons = document.querySelectorAll('.nav-toggle');
 
-toggles.forEach(({ buttonId, navId }) => {
-  const button = document.getElementById(buttonId);
-  const nav = document.getElementById(navId);
-  if (!button || !nav) return;
+toggleButtons.forEach((button) => {
+  const targetId = button.dataset.target;
+  if (!targetId) return;
+  const nav = document.getElementById(targetId);
+  if (!nav) return;
 
   button.addEventListener('click', () => {
     nav.classList.toggle('active');

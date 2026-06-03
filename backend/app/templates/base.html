@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Nawa Nirman Hardware{% endblock %}</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="brand">Nawa Nirman Hardware</a>
+            <button class="nav-toggle" data-target="mainNav">Menu</button>
+            <nav class="main-nav" id="mainNav">
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/categories">Categories</a>
+                <a href="/product">Products</a>
+                <a href="/contact">Contact</a>
+                <a href="/cart" class="nav-cart">
+                    Cart{% if cart_count and cart_count > 0 %} <span class="cart-badge">{{ cart_count }}</span>{% endif %}
+                </a>
+            </nav>
+            <div class="nav-actions">
+                {% if user %}
+                    <span class="nav-user">Hello, {{ user.name }}</span>
+                    <a href="/logout" class="btn btn-secondary">Logout</a>
+                {% else %}
+                    <a href="/login" class="btn btn-secondary">Login</a>
+                    <a href="/signup" class="btn btn-primary">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <h3>Nawa Nirman Hardware</h3>
+                <p>Reliable construction supplies and hardware essentials built for Nepal.</p>
+            </div>
+            <div>
+                <h4>Navigation</h4>
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <p>Kathmandu, Nepal</p>
+                <p>+977 98000 00000</p>
+                <p>info@nawanirmanhardware.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Nawa Nirman Hardware. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up | Nawa Nirman Hardware{% endblock %}
+
+{% block content %}
+<section class="page-banner page-banner--small">
+    <div class="container">
+        <h1>Create Your Account</h1>
+        <p>Register now to save carts, manage orders, and checkout quickly.</p>
+    </div>
+</section>
+
+<section class="section auth-section">
+    <div class="container auth-grid">
+        <div class="auth-card">
+            <h2>Sign Up</h2>
+            {% if error %}
+                <p class="error-message">{{ error }}</p>
+            {% endif %}
+            <form class="auth-form" action="/signup" method="post">
+                <label>
+                    Name
+                    <input type="text" name="name" value="{{ name or '' }}" required>
+                </label>
+                <label>
+                    Email
+                    <input type="email" name="email" value="{{ email or '' }}" required>
+                </label>
+                <label>
+                    Password
+                    <input type="password" name="password" required>
+                </label>
+                <button type="submit" class="btn btn-primary">Create account</button>
+            </form>
+        </div>
+        <div class="auth-panel">
+            <h3>Already have an account?</h3>
+            <p>Log in to sync your cart and complete the checkout process.</p>
+            <a href="/login" class="btn btn-secondary">Login</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

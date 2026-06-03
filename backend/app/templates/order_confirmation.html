@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Order Confirmed | Nawa Nirman Hardware{% endblock %}
+
+{% block content %}
+<section class="page-banner page-banner--small">
+    <div class="container">
+        <h1>Thank you for your order</h1>
+        <p>Your purchase is confirmed and we are preparing it for delivery.</p>
+    </div>
+</section>
+
+<section class="section order-confirmation-section">
+    <div class="container order-card">
+        <h2>Order #{{ order.id }}</h2>
+        <p>Received for {{ order.name }} at <strong>{{ order.email }}</strong>.</p>
+        <p>Your total payment: <strong>Rs. {{ order.total }}</strong></p>
+        <p>We will contact you soon with shipping details.</p>
+        <a href="/product" class="btn btn-primary">Continue shopping</a>
+    </div>
+</section>
+{% endblock %}

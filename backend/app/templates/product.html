@@ -1,106 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product | Nawa Nirman Hardware</title>
-    <link rel="stylesheet" href="/static/styles.css">
-</head>
-<body>
-    <header class="site-header">
-        <div class="container header-inner">
-            <a href="/" class="brand">Nawa Nirman Hardware</a>
-            <button class="nav-toggle" id="navToggleProduct">Menu</button>
-            <nav class="main-nav" id="mainNavProduct">
-                <a href="/">Home</a>
-                <a href="/about">About</a>
-                <a href="/categories">Categories</a>
-                <a href="/product">Products</a>
-                <a href="/contact">Contact</a>
-            </nav>
-        </div>
-    </header>
+{% extends "base.html" %}
 
-    <section class="page-banner page-banner--small">
-        <div class="container">
-            {% if product %}
-                <h1>{{ product.name }}</h1>
+{% block title %}Products | Nawa Nirman Hardware{% endblock %}
+
+{% block content %}
+<section class="page-banner page-banner--small">
+    <div class="container">
+        {% if product %}
+            <h1>{{ product.name }}</h1>
+            <p>{{ product.description }}</p>
+        {% else %}
+            <h1>Products</h1>
+            <p>Browse our available hardware products and add items to your cart.</p>
+        {% endif %}
+    </div>
+</section>
+
+{% if product %}
+    <section class="section product-detail-section">
+        <div class="container product-detail-grid">
+            <div class="product-image-large"></div>
+            <div class="product-detail-copy">
+                <span class="eyebrow">Featured Product</span>
+                <h2>{{ product.name }}</h2>
                 <p>{{ product.description }}</p>
-            {% else %}
-                <h1>Products</h1>
-                <p>Browse our available hardware products and click a card to see full details.</p>
-            {% endif %}
+                <div class="product-price">Rs. {{ product.price }}</div>
+                <ul class="feature-list">
+                    <li>High-quality hardware for home & construction</li>
+                    <li>Reliable performance and trusted durability</li>
+                    <li>Fast delivery across Kathmandu</li>
+                </ul>
+                <form action="/cart/add/{{ product.id }}" method="post">
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                </form>
+            </div>
         </div>
     </section>
-
-    {% if product %}
-        <section class="section product-detail-section">
-            <div class="container product-detail-grid">
-                <div class="product-image-large"></div>
-                <div class="product-detail-copy">
-                    <span class="eyebrow">Featured Product</span>
-                    <h2>{{ product.name }}</h2>
-                    <p>{{ product.description }}</p>
-                    <div class="product-price">Rs. {{ product.price }}</div>
-                    <ul class="feature-list">
-                        <li>High-quality hardware for home & construction</li>
-                        <li>Reliable performance and trusted durability</li>
-                        <li>Fast delivery across Kathmandu</li>
-                    </ul>
-                    <button class="btn btn-primary">Add to Cart</button>
-                </div>
+{% else %}
+    <section class="section featured-section">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Available Products</h2>
             </div>
-        </section>
-    {% else %}
-        <section class="section featured-section">
-            <div class="container">
-                <div class="section-heading">
-                    <h2>Available Products</h2>
-                </div>
-                {% if error %}
-                    <p class="error-message">{{ error }}</p>
-                {% endif %}
-                <div class="product-grid">
-                    {% for item in products %}
-                        <article class="product-card">
-                            <div class="product-image"></div>
-                            <h3>{{ item.name }}</h3>
-                            <p>{{ item.description }}</p>
-                            <div class="product-meta">
-                                <strong>Rs. {{ item.price }}</strong>
-                                <a href="/product/{{ item.id }}" class="card-link">View</a>
-                            </div>
-                        </article>
-                    {% endfor %}
-                </div>
-            </div>
-        </section>
-    {% endif %}
-
-    <footer class="site-footer">
-        <div class="container footer-grid">
-            <div>
-                <h3>Nawa Nirman Hardware</h3>
-                <p>Reliable construction supplies and hardware essentials built for Nepal.</p>
-            </div>
-            <div>
-                <h4>Navigation</h4>
-                <a href="/">Home</a>
-                <a href="/about">About</a>
-                <a href="/contact">Contact</a>
-            </div>
-            <div>
-                <h4>Contact</h4>
-                <p>Kathmandu, Nepal</p>
-                <p>+977 98000 00000</p>
-                <p>info@nawanirmanhardware.com</p>
+            {% if error %}
+                <p class="error-message">{{ error }}</p>
+            {% endif %}
+            <div class="product-grid">
+                {% for item in products %}
+                    <article class="product-card">
+                        <div class="product-image"></div>
+                        <h3>{{ item.name }}</h3>
+                        <p>{{ item.description }}</p>
+                        <div class="product-meta">
+                            <strong>Rs. {{ item.price }}</strong>
+                        </div>
+                        <div class="product-actions">
+                            <a href="/product/{{ item.id }}" class="card-link">View</a>
+                            <form action="/cart/add/{{ item.id }}" method="post">
+                                <button type="submit" class="btn btn-secondary">Add to Cart</button>
+                            </form>
+                        </div>
+                    </article>
+                {% endfor %}
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>© 2026 Nawa Nirman Hardware. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <script src="/static/script.js"></script>
-</body>
-</html>
+    </section>
+{% endif %}
+{% endblock %}

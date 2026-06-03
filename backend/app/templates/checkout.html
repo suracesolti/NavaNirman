@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout | Nawa Nirman Hardware{% endblock %}
+
+{% block content %}
+<section class="page-banner page-banner--small">
+    <div class="container">
+        <h1>Checkout</h1>
+        <p>Enter your details and pay securely to complete your order.</p>
+    </div>
+</section>
+
+<section class="section checkout-section">
+    <div class="container checkout-grid">
+        <div class="checkout-summary">
+            <h2>Order summary</h2>
+            <ul class="checkout-items">
+                {% for item in cart_items %}
+                    <li>
+                        <strong>{{ item.product.name }}</strong>
+                        <span>{{ item.quantity }} × Rs. {{ item.product.price }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="checkout-total">
+                <span>Total</span>
+                <strong>Rs. {{ total }}</strong>
+            </div>
+        </div>
+        <div class="checkout-form-card">
+            <h2>Payment details</h2>
+            <form action="/checkout" method="post" class="checkout-form">
+                <label>
+                    Full name
+                    <input type="text" name="name" required>
+                </label>
+                <label>
+                    Email address
+                    <input type="email" name="email" required>
+                </label>
+                <label>
+                    Payment method
+                    <select name="payment_method" disabled>
+                        <option>Cash on delivery (demo)</option>
+                    </select>
+                </label>
+                <button type="submit" class="btn btn-primary">Pay Rs. {{ total }}</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

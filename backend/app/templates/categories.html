@@ -1,67 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categories | Nawa Nirman Hardware</title>
-    <link rel="stylesheet" href="/static/styles.css">
-</head>
-<body>
-    <header class="site-header">
-        <div class="container header-inner">
-            <a href="/" class="brand">Nawa Nirman Hardware</a>
-            <button class="nav-toggle" id="navToggleCategories">Menu</button>
-            <nav class="main-nav" id="mainNavCategories">
-                <a href="/">Home</a>
-                <a href="/about">About</a>
-                <a href="/categories">Categories</a>
-                <a href="/product">Products</a>
-                <a href="/contact">Contact</a>
-            </nav>
-        </div>
-    </header>
-    <section class="page-banner page-banner--small">
-        <div class="container">
-            <h1>Shop by Category</h1>
-            <p>Explore every tool, material and accessory designed for construction and renovation.</p>
-        </div>
-    </section>
+{% extends "base.html" %}
 
-    <section class="section category-list-section">
-        <div class="container category-grid">
-            {% for category in categories %}
-                <article class="category-card-large">
-                    <h3>{{ category.name }}</h3>
-                    <p>{{ category.description }}</p>
-                </article>
-            {% endfor %}
-        </div>
-    </section>
+{% block title %}Categories | Nawa Nirman Hardware{% endblock %}
 
-    <footer class="site-footer">
-        <div class="container footer-grid">
-            <div>
-                <h3>Nawa Nirman Hardware</h3>
-                <p>Reliable construction supplies and hardware essentials built for Nepal.</p>
-            </div>
-            <div>
-                <h4>Navigation</h4>
-                <a href="/">Home</a>
-                <a href="/about">About</a>
-                <a href="/contact">Contact</a>
-            </div>
-            <div>
-                <h4>Contact</h4>
-                <p>Kathmandu, Nepal</p>
-                <p>+977 98000 00000</p>
-                <p>info@nawanirmanhardware.com</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2026 Nawa Nirman Hardware. All Rights Reserved.</p>
-        </div>
-    </footer>
+{% block content %}
+<section class="page-banner page-banner--small">
+    <div class="container">
+        <h1>Shop by Category</h1>
+        <p>Explore every tool, material and accessory designed for construction and renovation.</p>
+    </div>
+</section>
 
-    <script src="/static/script.js"></script>
-</body>
-</html>
+<section class="section category-list-section">
+    <div class="container category-grid">
+        {% for category in categories %}
+            <article class="category-card-large">
+                <h3>{{ category.name }}</h3>
+                <p>{{ category.description }}</p>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
